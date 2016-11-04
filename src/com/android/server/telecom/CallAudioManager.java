@@ -137,6 +137,15 @@ final class CallAudioManager extends CallsManagerListenerBase
 
                     Log.v(this, "Request to change audio mode from %s to %s", modeToString(oldMode),
                             modeToString(newMode));
+                            
+                            
+                    if(newMode == 0) {
+                        mAudioManager.setParameters("TFA_SETVOLUME=0");
+                        mAudioManager.setParameters("realcall=off");
+                    } else if(newMode == AudioManager.MODE_IN_COMMUNICATION || newMode == AudioManager.MODE_RINGTONE
+                                || newMode == AudioManager.MODE_IN_CALL) {
+                        mAudioManager.setParameters("realcall=on");
+                    }
 
                     if (oldMode != newMode) {
                         if (oldMode == AudioManager.MODE_IN_CALL &&
