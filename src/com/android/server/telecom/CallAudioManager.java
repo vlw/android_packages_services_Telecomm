@@ -95,6 +95,15 @@ public class CallAudioManager extends CallsManagerListenerBase {
             // No audio management for calls in a conference, or external calls.
             return;
         }
+        
+                            if(newState == 0) {
+                        mAudioManager.setParameters("TFA_SETVOLUME=0");
+                        mAudioManager.setParameters("realcall=off");
+                    } else if(newState == AudioManager.MODE_IN_COMMUNICATION || newState == AudioManager.MODE_RINGTONE
+                                || newState == AudioManager.MODE_IN_CALL) {
+                        mAudioManager.setParameters("realcall=on");
+                    }
+        
         Log.d(LOG_TAG, "Call state changed for TC@%s: %s -> %s", call.getId(),
                 CallState.toString(oldState), CallState.toString(newState));
 
